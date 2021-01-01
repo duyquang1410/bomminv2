@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <!--Include this css file in the <head> tag -->
+          <meta charset="UTF-8">
+      <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css"/>
+      <link rel="stylesheet" href="dist/css/Lobibox.min.css"/>
+       <link rel="stylesheet" href="demo/demo.css"/>
+   </head>
+   
+   <body>
+      <fieldset>
+							<button id="popupYesNoBasic" class="btn btn-primary">Confirm</button>
+                            <h3>With title</h3>
+                            <div class="bs-example">
+                                <button id="miniDefaultTitle" class="btn btn-default">Default</button>
+                                <button id="miniInfoTitle" class="btn btn-info">Info</button>
+                                <button id="miniWarningTitle" class="btn btn-warning">Warning</button>
+                                <button id="miniErrorTitle" class="btn btn-danger">Error</button>
+                                <button id="miniSuccessTitle" class="btn btn-success">Success</button>
+                            </div>
+                        </fieldset>
+      <!--Include these script files in the <head> or <body> tag-->
+      <script src="lib/jquery.1.11.min.js"></script>
+      <script src="dist/js/Lobibox.min.js"></script>
+       <script src="demo/demo.js"></script>
+      <!-- If you do not need both (messageboxes and notifications) you can inclue only one of them -->
+      <!-- <script src="dist/js/messageboxes.min.js"></script> -->
+      <!-- <script src="dist/js/notifications.min.js"></script> -->
+   </body>
+
+   <script>
+ Lobibox.notify('success', {
+                    size: 'mini',
+                    title: 'Thành công',
+                    msg: 'Thêm bài viết thành công.'
+                });
+				
+				 
+            Lobibox.confirm({
+                    msg: "Are you sure you want to delete this user?"
+                });
+   </script>
+</html>
