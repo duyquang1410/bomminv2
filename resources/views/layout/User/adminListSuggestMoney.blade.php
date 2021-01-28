@@ -28,7 +28,9 @@
                                 <tr>
                                     <td>{!! $key+1 !!}</td>
                                     <td>
+                                        @if(!empty($items['user']['avatar']))
                                          <div class="avatar"><img width="50px" height="50px" alt="avatar.png" src="{!! URL::asset('public/uploads/user/'.$items['user']['avatar']) !!}" alt=""></div>
+                                         @endif
                                         <div class="fullname">
                                             <b>
                                             <a href="">{!! !empty($items['user']['fullname'])?$items['user']['fullname']:'' !!}</a>

@@ -147,7 +147,7 @@
                                         if(data['role'] == 1){
                                              window.location.href = "{!! route('dashbroad.index') !!}";
                                          }else {
-                                             window.location.href = "{!! route('users.listUserTimeKeeping', ['id'=>date('m')]) !!}";
+                                             window.location.href = "{!! route('users.listUserTimeKeeping', ['month'=>date('m'), 'year'=>date('Y')]) !!}";
                                          }
                                     },1500);
                                 }
