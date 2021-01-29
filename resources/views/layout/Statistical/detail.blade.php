@@ -29,7 +29,29 @@
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     <div class="panel-title pull-left">Nhân viên: <img width="45px" height="45px" style="border-radius: 50%; object-fit: cover" alt="avatar.png" src="{!! URL::asset('public/uploads/user/'.(!empty($data[0]['user']['avatar'])?$data[0]['user']['avatar']:'')) !!}" alt=""> <b style="color: #0090da; font-weight: 600">{!! !empty($data[0]['user']['fullname'])?$data[0]['user']['fullname']:'' !!}</b></div>
-                                                    <div class="totalMoney pull-right"><b>Tổng tiền lương</b> :  <span style="">{!! !empty($salary->total_Money)?number_format($salary->total_Money, 0):'0' !!}</span> (Đi hát , bay ) - <span style="">{!! !empty($salary->suggest_Money)?number_format($salary->suggest_Money, 0):'0' !!} </span> (Tạm ứng) = <span style="">{!! !empty($salary->realField_Money)?number_format($salary->realField_Money, 0):0 !!} </span> VND</div>
+                                                    <div class="totalMoney pull-right"><b>Tổng tiền lương</b> :
+                                                        <span style="">{!! !empty($salary->total_Money)?number_format($salary->total_Money, 0):'0' !!}</span> (Đi hát , bay ) -
+                                                        <span style="">
+                                                            <?php
+                                                            $totalSuggest = 0;
+                                                            $dataSuggest_Money = DB::table('suggestmoneys')->where('user_id', $id)->where('month', $month)->where('year', $year)->where('status', 1)->get()->toArray();
+                                                            if(!empty($dataSuggest_Money)){
+                                                                foreach($dataSuggest_Money as $itemSuggest){
+                                                                    $totalSuggest = $totalSuggest+$itemSuggest->numberMoney;
+                                                                }
+                                                            }
+                                                            ?>
+                                                             <b> {!! !empty($totalSuggest)?number_format($totalSuggest, 0):'' !!} đ</b>
+                                                        </span>
+                                                        (Tạm ứng) =
+                                                        <span style="">
+                                                             <?php
+                                                            if(!empty($salary->total_Money)){
+                                                                $totalSalarys = $salary->total_Money - $totalSuggest;
+                                                            }
+                                                            ?>
+                                                            <b>{!! !empty($totalSalarys)?number_format($totalSalarys, 0):'' !!} đ</b>
+                                                        </span> VND</div>
                                                 </div>
                                                 <div class="panel-body">
                                                     <table class="table table-bordered table-striped table-hover dataTables-example">

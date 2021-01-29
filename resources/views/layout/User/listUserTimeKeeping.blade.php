@@ -25,7 +25,7 @@
                                          <?php 
                                             for($i=1;$i<=12;$i++){
                                                 ?>
-                                                <div class="item-time"><a class="@if(!empty($id) && $id==$i) active @endif" href="{!! route('users.listUserTimeKeeping', ['id'=>$i]) !!}" title="" class="">{!! $i !!}</a></div>
+                                                <div class="item-time"><a class="@if(!empty($id) && $id==$i) active @endif" href="{!! route('users.listUserTimeKeeping', ['month'=>$i, 'year'=>date('Y')]) !!}" title="" class="">{!! $i !!}</a></div>
                                                 <?php
                                             }
                                          ?>

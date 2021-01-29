@@ -682,6 +682,12 @@ class UsersController extends Controller
              $data = Salary::with('User')->select('*')->where('month', date('m'))->where('year', date('Y'))->get()->toArray();
             $id = date('m');
         }
+        if(empty($month)){
+            $month = date('m');
+        }
+        if(empty($year)){
+            $year = date('Y');
+        }
         return view('layout.User.adminListSalary', compact(['data', 'month', 'year']));
     }
 
@@ -748,10 +754,24 @@ class UsersController extends Controller
      */
 
     public function adminEditPayment($id=null){
+        $data = array();
         if(!empty($id)){
             $data = Salary::findOrFail($id);
-            return $data;
         }
+
+        $dataSuggest_Money = DB::table('suggestmoneys')->where('user_id', $data['user_id'])->where('month', $data['month'])->where('year', $data['year'])->where('status', 1)->get()->toArray();
+        $totalSuggest = 0;
+        if(!empty($dataSuggest_Money)){
+            $totalSuggest = 0;
+            foreach($dataSuggest_Money as $itemSuggest){
+                $totalSuggest = $totalSuggest+$itemSuggest->numberMoney;
+            }
+        }
+        // Tổng nhận  = tổng tiền - tổng ứng
+        $realField_Money = $data['total_Money'] - $totalSuggest;
+        $data['suggest_Money'] = $totalSuggest;
+        $data['realField_Money'] = $realField_Money;
+        return response()->json($data);
     }
 
     /**  Update thanh toán lương của 1 nhân viên

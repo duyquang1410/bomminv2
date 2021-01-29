@@ -28,8 +28,14 @@ class StatisticalController extends Controller
             $data = TimeKeeping::with('User')->select('*')->where('user_id', $id)->where('month', date('m'))->where('year', date('Y'))->get()->toArray();
             $salary = Salary::select('*')->where('user_id', $id)->where('month', date('m'))->where('year', date('Y'))->first();
         }
+        if(empty($month)){
+            $month = date('m');
+        }
+        if(empty($year)){
+            $year = date('Y');
+        }
 
-        return view('layout.Statistical.detail', compact(['data', 'salary', 'month', 'year']));
+        return view('layout.Statistical.detail', compact(['data', 'salary', 'month', 'year', 'id']));
     }
 
     public function listRevenue($month=null, $year=null)
