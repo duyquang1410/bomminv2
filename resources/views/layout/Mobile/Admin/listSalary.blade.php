@@ -75,8 +75,25 @@
                          <a href="javascript:;" class="dataDetail" id="{!! !empty($items['id'])?$items['id']:0 !!}" data-toggle="modal" data-target="#detailTimeKeeping"><h3 class="fullname">{!! !empty($items['user']['fullname'])?$items['user']['fullname']:'' !!}</h3></a>
                          <div class="info-item-salary">
                             <div class="total_Money"> Tổng lương : {!! !empty($items['total_Money'])?number_format($items['total_Money'], 0):'0' !!} VND</div>
-                            <div class="suggest_Money">Tạm ứng : {!! !empty($items['suggest_Money'])?number_format($items['suggest_Money'], 0):'0' !!} VND </div>
-                            <div class="realField_Money">Lương thực lĩnh : <b>{!! !empty($items['realField_Money'])?number_format($items['realField_Money'], 0):'0' !!} VND</b> </div>
+                            <div class="suggest_Money">Tạm ứng :
+                                <?php
+                                $totalSuggest = 0;
+                                $dataSuggest_Money = DB::table('suggestmoneys')->where('user_id', $items['user_id'])->where('month', $items['month'])->where('year', $items['year'])->where('status', 1)->get()->toArray();
+                                if(!empty($dataSuggest_Money)){
+                                    $totalSuggest = 0;
+                                    foreach($dataSuggest_Money as $itemSuggest){
+                                        $totalSuggest = $totalSuggest+$itemSuggest->numberMoney;
+                                    }
+                                }
+                                ?>
+                                <b> {!! !empty($totalSuggest)?number_format($totalSuggest, 0):'' !!} </b> VND </div>
+                            <div class="realField_Money">Lương thực lĩnh : <b>
+                                    <?php
+                                    if(!empty($items['total_Money'])){
+                                        $totalSalarys = $items['total_Money'] - $totalSuggest;
+                                    }
+                                    ?>
+                                        {!! !empty($totalSalarys)?number_format($totalSalarys, 0):'' !!} VND</b> </div>
                             <div class="status">Trạng thái : 
                                 @if($items['status'] == 0)
                                     <span style="color: #a94442; font-weight: 700">Chưa thanh toán</span> 
