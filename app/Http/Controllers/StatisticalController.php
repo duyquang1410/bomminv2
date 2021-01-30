@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use App\Salary;
+use App\suggestMoney;
 
 class StatisticalController extends Controller
 {
@@ -92,6 +93,24 @@ class StatisticalController extends Controller
           $totalMoneyAdmin = $totalMoney - $totalMoneyUser;
 
             return view('layout.Statistical.listRevenue', compact('timeHourGoSing', 'timeMinGoSing', 'timeHourGoFly', 'timeMinGoFly', 'totalMoneyUser', 'totalMoneyAdmin', 'totalMoney', 'month', 'year'));
+    }
+
+
+    function listSuggest($id=null, $month=null, $year=null){
+        if(!empty($id) && isset($month) && isset($year)){
+            $data = suggestMoney::select('*')->where('user_id', $id)->where('month', $month)->where('year', $year)->get()->toArray();
+        }else{
+            return redirect('login');
+        }
+        if(empty($data)){
+            $data = array();
+        }
+        $dataUser = User::findOrFail($id);
+           if(empty($dataUser)){
+               $dataUser = array();
+           }
+        return view('layout.Statistical.listSuggest', compact(['data', 'dataUser', 'month', 'year', 'id']));
+
     }
 
 

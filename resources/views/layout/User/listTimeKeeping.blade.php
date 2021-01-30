@@ -120,24 +120,6 @@
                             <div class="col-lg-12">
                                 <div class="ibox float-e-margins">
                                     <div class="ibox-content">
-                                        <div class="row">
-                                            <div class="thaotac">
-                                                <div class="col-sm-2 m-b-xs">
-                                                    <select name="selectitem" class="input-sm form-control input-s-sm inline">
-                                                        <option value="0">Chọn tác vụ</option>
-                                                        <option value="1">Nổi bật</option>
-                                                        <option value="2">Ẩn</option>
-                                                        <option value="3">Hiện thị</option>
-                                                        <option value="4">Xóa vĩnh viễn</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-1 m-b-xs">
-                                                    <button type="submit" class="btn btn-primary " type="button"><i class="fa fa-check"></i>&nbsp;Áp dụng</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ibox float-e-margins">
-                                            <div class="ibox-content">
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-bordered table-hover dataTables-example" >
                                                         <thead>
@@ -196,9 +178,7 @@
                                                         @endif
                                                         </tbody>
                                                     </table>
-                                                </div>
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -207,7 +187,6 @@
                 </div>
             </div>
         </div>
-
     <!-- Modal edit -->
     <div class="modal fade EditTimeKeeping" id="EditTimeKeeping" role="dialog">
         <div class="modal-dialog modal-md">

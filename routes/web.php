@@ -460,6 +460,10 @@ Route::group(['middleware'=>'auth'], function(){
                   'as'    =>  'statisticals.listRevenue',
                   'uses'  => 'StatisticalController@listRevenue'
               ]);
+              Route::get('suggest/{id}/thang/{month}/nam/{year}', [
+                  'as'    =>  'statisticals.suggest',
+                  'uses'  => 'StatisticalController@listSuggest'
+              ]);
         });
 	});
 

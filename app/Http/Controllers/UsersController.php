@@ -803,13 +803,13 @@ class UsersController extends Controller
 
     // Danh sách chấm công ( Theo tháng hiện tại )
     public function adminListTimekeepingMonth(){
-        $data = TimeKeeping::with('User')->select('*')->where('month', date('m'))->orderBy('id', 'DESC')->get()->toArray();
+        $data = TimeKeeping::with('User')->select('*')->where('month', date('m'))->where('year', date('Y'))->orderBy('id', 'DESC')->get()->toArray();
         if(empty($data)){
             $data = array();
         }
         // Thống kê số giờ hát tháng :
-        $timeHourGoSing = DB::table('timekeepings')->where('month', date('m'))->sum('timeHourGoSing');
-        $timeMinGoSing = DB::table('timekeepings')->where('month', date('m'))->sum('timeMinGoSing');
+        $timeHourGoSing = DB::table('timekeepings')->where('month', date('m'))->where('year', date('Y'))->sum('timeHourGoSing');
+        $timeMinGoSing = DB::table('timekeepings')->where('month', date('m'))->where('year', date('Y'))->sum('timeMinGoSing');
         $timemin = $timeMinGoSing;
         $hour = floor($timemin/60);
         $min = $timemin%60;
@@ -818,8 +818,8 @@ class UsersController extends Controller
         $timeMinGoSing =  $min;
 
         // Thống kê số giờ bay tháng
-        $timeHourGoFly = DB::table('timekeepings')->where('month', date('m'))->sum('timeHourGoFly');
-        $timeMinGoFly = DB::table('timekeepings')->where('month', date('m'))->sum('timeMinGoFly');
+        $timeHourGoFly = DB::table('timekeepings')->where('month', date('m'))->where('year', date('Y'))->sum('timeHourGoFly');
+        $timeMinGoFly = DB::table('timekeepings')->where('month', date('m'))->where('year', date('Y'))->sum('timeMinGoFly');
         $timemin = $timeMinGoFly;
         $hour = floor($timemin/60);
         $min = $timemin%60;
@@ -828,17 +828,17 @@ class UsersController extends Controller
         $timeMinGoFly =  $min;
 
         // Thống kê tổng tiền hát trả cho NV
-        $totalMoneyGoSing = DB::table('timekeepings')->where('month', date('m'))->sum('totalMoneyGoSing');
+        $totalMoneyGoSing = DB::table('timekeepings')->where('month', date('m'))->where('year', date('Y'))->sum('totalMoneyGoSing');
 
         // Thống kê tổng tiền bay trả cho NV
-        $totalMoneyGoFly = DB::table('timekeepings')->where('month', date('m'))->sum('totalMoneyGoFly');
+        $totalMoneyGoFly = DB::table('timekeepings')->where('month', date('m'))->where('year', date('Y'))->sum('totalMoneyGoFly');
 
         // Thống kê tổng tiền hát còn lại:
-        $totalMoneyGoSingAdmin = DB::table('timekeepings')->where('month', date('m'))->sum('totalMoneyGoSingAdmin');
+        $totalMoneyGoSingAdmin = DB::table('timekeepings')->where('month', date('m'))->where('year', date('Y'))->sum('totalMoneyGoSingAdmin');
         $totalMoneyGoSingAdmin = $totalMoneyGoSingAdmin - $totalMoneyGoSing;
 
         // Thống kê tổng tiền bay còn lại:
-        $totalMoneyGoFlyAdmin = DB::table('timekeepings')->where('month', date('m'))->sum('totalMoneyGoFlyAdmin');
+        $totalMoneyGoFlyAdmin = DB::table('timekeepings')->where('month', date('m'))->where('year', date('Y'))->sum('totalMoneyGoFlyAdmin');
         $totalMoneyGoFlyAdmin = $totalMoneyGoFlyAdmin - $totalMoneyGoFly;
 
         // Thống kê tổng tiền thu về :
@@ -846,6 +846,7 @@ class UsersController extends Controller
 
         // Thống kê tổng tiền trả NV :
         $totalUser = $totalMoneyGoSing +  $totalMoneyGoFly;
+
         return view('layout.User.listTimeKeeping', compact(['data', 'timeHourGoSing', 'timeMinGoSing', 'timeHourGoFly', 'timeMinGoFly', 'totalMoneyGoSing', 'totalMoneyGoFly', 'totalMoneyGoSingAdmin', 'totalMoneyGoFlyAdmin', 'totalAdmin', 'totalUser']));
 
     }
@@ -855,14 +856,14 @@ class UsersController extends Controller
     {
 
          if(!empty($id)){
-            $data = TimeKeeping::with('User')->select('*')->where('day', $id)->where('month', date('m'))->orderBy('id', 'DESC')->get()->toArray();
+            $data = TimeKeeping::with('User')->select('*')->where('day', $id)->where('month', date('m'))->where('year', date('Y'))->orderBy('id', 'DESC')->get()->toArray();
          }else {
-             $data = TimeKeeping::with('User')->select('*')->where('day', date('d'))->where('month', date('m'))->orderBy('id', 'DESC')->get()->toArray();
+             $data = TimeKeeping::with('User')->select('*')->where('day', date('d'))->where('month', date('m'))->where('year', date('Y'))->orderBy('id', 'DESC')->get()->toArray();
          }
 
          // Thống kê số giờ hát ngày :
-         $timeHourGoSing = DB::table('timekeepings')->where('day', $id)->where('month', date('m'))->sum('timeHourGoSing');
-         $timeMinGoSing = DB::table('timekeepings')->where('day', $id)->where('month', date('m'))->sum('timeMinGoSing');
+         $timeHourGoSing = DB::table('timekeepings')->where('day', $id)->where('month', date('m'))->where('year', date('Y'))->sum('timeHourGoSing');
+         $timeMinGoSing = DB::table('timekeepings')->where('day', $id)->where('month', date('m'))->where('year', date('Y'))->sum('timeMinGoSing');
             $timemin = $timeMinGoSing;
             $hour = floor($timemin/60);
             $min = $timemin%60;
@@ -871,8 +872,8 @@ class UsersController extends Controller
             $timeMinGoSing =  $min;
 
          // Thống kê số giờ bay
-            $timeHourGoFly = DB::table('timekeepings')->where('day', $id)->where('month', date('m'))->sum('timeHourGoFly');
-            $timeMinGoFly = DB::table('timekeepings')->where('day', $id)->where('month', date('m'))->sum('timeMinGoFly');
+            $timeHourGoFly = DB::table('timekeepings')->where('day', $id)->where('month', date('m'))->where('year', date('Y'))->sum('timeHourGoFly');
+            $timeMinGoFly = DB::table('timekeepings')->where('day', $id)->where('month', date('m'))->where('year', date('Y'))->sum('timeMinGoFly');
                 $timemin = $timeMinGoFly;
                 $hour = floor($timemin/60);
                 $min = $timemin%60;
@@ -881,17 +882,17 @@ class UsersController extends Controller
                 $timeMinGoFly =  $min;
 
          // Thống kê tổng tiền hát trả cho NV
-            $totalMoneyGoSing = DB::table('timekeepings')->where('day', date('d'))->where('month', date('m'))->sum('totalMoneyGoSing');
+            $totalMoneyGoSing = DB::table('timekeepings')->where('day', date('d'))->where('month', date('m'))->where('year', date('Y'))->sum('totalMoneyGoSing');
 
          // Thống kê tổng tiền bay trả cho NV
-            $totalMoneyGoFly = DB::table('timekeepings')->where('day', date('d'))->where('month', date('m'))->sum('totalMoneyGoFly');
+            $totalMoneyGoFly = DB::table('timekeepings')->where('day', date('d'))->where('month', date('m'))->where('year', date('Y'))->sum('totalMoneyGoFly');
 
          // Thống kê tổng tiền hát còn lại:
-        $totalMoneyGoSingAdmin = DB::table('timekeepings')->where('day', date('d'))->where('month', date('m'))->sum('totalMoneyGoSingAdmin');
+        $totalMoneyGoSingAdmin = DB::table('timekeepings')->where('day', date('d'))->where('month', date('m'))->where('year', date('Y'))->sum('totalMoneyGoSingAdmin');
         $totalMoneyGoSingAdmin = $totalMoneyGoSingAdmin - $totalMoneyGoSing;
 
          // Thống kê tổng tiền bay còn lại:
-         $totalMoneyGoFlyAdmin = DB::table('timekeepings')->where('day', date('d'))->where('month', date('m'))->sum('totalMoneyGoFlyAdmin');
+         $totalMoneyGoFlyAdmin = DB::table('timekeepings')->where('day', date('d'))->where('month', date('m'))->where('year', date('Y'))->sum('totalMoneyGoFlyAdmin');
          $totalMoneyGoFlyAdmin = $totalMoneyGoFlyAdmin - $totalMoneyGoFly;
 
          // Thống kê tổng tiền thu về :

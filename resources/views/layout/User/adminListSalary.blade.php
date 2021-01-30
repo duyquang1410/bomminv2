@@ -68,6 +68,7 @@
                         <th>Tổng lương</th>
                         <th>Tạm ứng</th>
                         <th>Lương thực lĩnh</th>
+                        <th>Thu về</th>
                         <th>Duyệt</th>
                         <th>Trạng thái</th>
                         <th width="300px">Thao tác</th>
@@ -99,7 +100,9 @@
                                         }
                                     }
                                     ?>
-                                   <b> {!! !empty($totalSuggest)?number_format($totalSuggest, 0):'' !!} đ</b>
+                                   <b> <a href="{!! route('statisticals.suggest', ['id'=>$items['user']['id'], 'month'=>$month, 'year'=>$year]) !!}" title="Chi tiết ứng lương">
+                                           {!! !empty($totalSuggest)?number_format($totalSuggest, 0):'' !!} đ
+                                       </a></b>
                                 </td>
                                 <td>
                                     <?php
@@ -108,6 +111,21 @@
                                     }
                                     ?>
                                     <b>{!! !empty($totalSalarys)?number_format($totalSalarys, 0):'' !!} đ</b>
+                                </td>
+                                <td>
+                                    <?php
+                                   // $totalMoney = DB::table('timekeepings')->select('*')->where('user_id', $items['user']['id'])->where('month', $month)->where('year', $year)->where('adminStatus', 1)->sum('totalMoney');
+
+                                    // Tổng quản lý thu của khách từ nhân viên này
+                                    $totalAdminMoney = DB::table('timekeepings')->select('*')->where('user_id', $items['user']['id'])->where('month', $month)->where('year', $year)->where('adminStatus', 1)->sum('totalMoneyAdmin');
+
+                                    if(!empty($totalAdminMoney)){
+                                        $totalMoneyCollected = $totalAdminMoney - $items['total_Money'];
+                                    }else{
+                                        $totalMoneyCollected = 0;
+                                    }
+                                    ?>
+                                    <b>{!! !empty($totalMoneyCollected)?number_format($totalMoneyCollected, 0):'' !!} đ</b>
                                 </td>
                                 <td>
                                     <?php
