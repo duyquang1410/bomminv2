@@ -23,7 +23,6 @@
                                                     $totalSuggest = 0;
                                                     $dataSuggest_Money = DB::table('suggestmoneys')->where('user_id', $items['user_id'])->where('month', $items['month'])->where('year', $items['year'])->where('status', 1)->get()->toArray();
                                                     if(!empty($dataSuggest_Money)){
-                                                        $totalSuggest = 0;
                                                         foreach($dataSuggest_Money as $itemSuggest){
                                                             $totalSuggest = $totalSuggest+$itemSuggest->numberMoney;
                                                         }
@@ -35,6 +34,9 @@
                                         <div class="realField_Money">Lương thực lĩnh : <b>
                                                 <?php
                                                 if(!empty($items['total_Money'])){
+                                                    if(empty($totalSuggest)){
+                                                        $totalSuggest = 0;
+                                                    }
                                                     $totalSalarys = $items['total_Money'] - $totalSuggest;
                                                 }
                                                 ?>

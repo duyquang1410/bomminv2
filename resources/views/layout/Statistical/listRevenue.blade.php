@@ -7,12 +7,22 @@
                 <div class=" wrapper white-bg page-heading">
                     <div class="col-lg-12">
                         <h2 class="pull-left">Thống kê doanh thu <span style="color: #f8ac59;">{!! !empty($month)?$month:date('m') !!}/{!! !empty($year)?$year:date('Y') !!}</span></h2>
-                        <div class="pull-right list-month-statistical">
+                         <div class="pull-right list-month-statistical">
                             <div class=""><b>Tháng / Năm (2020): </b></div>
                             <?php
                             for($i=1;$i<=12;$i++){
                             ?>
-                            <div class="item-time"><a href="{!! route('statisticals.listRevenue', ['month'=>$i, 'year'=>2020]) !!}" class="<?php if($i==$month) echo 'active'; ?>">{!! $i !!}</a></div>
+                            <div class="item-time"><a href="{!! route('statisticals.listRevenue', ['month'=>$i, 'year'=>2020]) !!}" class="<?php if($i==$month && $year==2020) echo 'active'; ?>">{!! $i !!}</a></div>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <div class="pull-right list-month-statistical">
+                            <div class=""><b>Tháng / Năm (2021): </b></div>
+                            <?php
+                            for($i=1;$i<=12;$i++){
+                            ?>
+                            <div class="item-time"><a href="{!! route('statisticals.listRevenue', ['month'=>$i, 'year'=>2021]) !!}" class="<?php if($i==$month && $year==2021) echo 'active'; ?>">{!! $i !!}</a></div>
                             <?php
                             }
                             ?>
@@ -93,6 +103,7 @@
                    }
                    .list-month-statistical {
                        display: inline-flex;
+                           width: 100%;
                    }
                    .list-month-statistical .item-time a{
                        display: inline-block;
@@ -101,7 +112,7 @@
                        margin: 4px;
                        border-radius: 5px;
                        color: #FFF;
-                       font-size: 20px;
+                       font-size: 16px;
                    }
                    .box-img-fullname img{
                        width: 50px;
@@ -150,6 +161,9 @@
                    .content .page-heading {
                         display: inline-block;
                         width: 100%;
+                   }
+                   .list-month-statistical {
+                          font-size: 15px;
                    }
                </style>
 @endsection
