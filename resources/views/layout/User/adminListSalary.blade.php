@@ -78,6 +78,7 @@
                 @if(!empty($data))
                     @foreach($data as $key => $items)
                         @if(!empty($items['user']['id']))
+                        <?php   $totalSuggest = 0; ?>
                             <tr>
                                 <td>{!! $key+1 !!}</td>
                                 <td>
@@ -91,10 +92,9 @@
                                 <td><b>{!! !empty($items['total_Money'])?number_format($items['total_Money'], 0):0 !!} đ</b></td>
                                 <td>
                                     <?php
-                                    $totalSuggest = 0;
+                                   
                                     $dataSuggest_Money = DB::table('suggestmoneys')->where('user_id', $items['user']['id'])->where('month', $month)->where('year', $year)->where('status', 1)->get()->toArray();
                                     if(!empty($dataSuggest_Money)){
-                                        $totalSuggest = 0;
                                         foreach($dataSuggest_Money as $itemSuggest){
                                             $totalSuggest = $totalSuggest+$itemSuggest->numberMoney;
                                         }
@@ -108,6 +108,8 @@
                                     <?php
                                     if(!empty($items['total_Money'])){
                                         $totalSalarys = $items['total_Money'] - $totalSuggest;
+                                    }else{
+                                         $totalSalarys = 0 - $totalSuggest;
                                     }
                                     ?>
                                     <b>{!! !empty($totalSalarys)?number_format($totalSalarys, 0):'' !!} đ</b>
