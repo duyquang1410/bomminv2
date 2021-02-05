@@ -12,6 +12,9 @@
 
                         @if(!empty($data))
                             @foreach($data as $items)
+                            <?php   
+                                $totalSuggest = 0;
+                            ?>
                                 <div class="item-box">
                                     <div class="img-box"><a href="{!! route('users.detailSalary', ['id'=>$items['id']]) !!}"><img src="{!! URL::asset('public/uploads/user/salary.png') !!}"></a></div>
                                     <div class="box-info">
@@ -20,7 +23,6 @@
                                         @if(!empty($items['suggest_Money']))
                                             <div class="text-payment"><span>Tạm ứng: </span> <span class="pricePayment">
                                                 <?php
-                                                    $totalSuggest = 0;
                                                     $dataSuggest_Money = DB::table('suggestmoneys')->where('user_id', $items['user_id'])->where('month', $items['month'])->where('year', $items['year'])->where('status', 1)->get()->toArray();
                                                     if(!empty($dataSuggest_Money)){
                                                         foreach($dataSuggest_Money as $itemSuggest){
